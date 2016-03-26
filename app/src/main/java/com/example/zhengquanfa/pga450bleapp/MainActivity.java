@@ -8,22 +8,43 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.LayoutInflater;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.FragmentManager;
 
 public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        MainActivityFragment fragment1 = new MainActivityFragment();
+        transaction.add(R.id.main, fragment1,"frag1");
+        transaction.commit();
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton fab1 = (FloatingActionButton) findViewById(R.id.fab1);
+        fab1.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            public void onClick(View v) {
+                FragmentManager manager = getSupportFragmentManager();
+                FragmentTransaction transaction = manager.beginTransaction();
+                MainActivityFragment fragment1 = new MainActivityFragment();
+                transaction.replace(R.id.main, fragment1);
+                transaction.commit();
+            }
+        });
+
+        FloatingActionButton fab2 = (FloatingActionButton) findViewById(R.id.fab2);
+        fab2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager manager = getSupportFragmentManager();
+                FragmentTransaction transaction = manager.beginTransaction();
+                FragmentMeasure fragment2 = new FragmentMeasure();
+                transaction.replace(R.id.main, fragment2);
+                transaction.commit();
             }
         });
     }
