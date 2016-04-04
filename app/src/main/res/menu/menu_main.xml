@@ -2,9 +2,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.zhengquanfa.pga450bleapp.MainActivity">
+    <item android:id="@+id/action_edit"
+        android:title="Scan"
+        android:orderInCategory="80"
+        android:icon="@drawable/ab_edit"
+        app:showAsAction="ifRoom" />
+
+    <item android:id="@+id/action_share"
+        android:title="Run"
+        android:orderInCategory="90"
+        android:icon="@drawable/ab_share"
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:title="Set"
         app:showAsAction="never" />
 </menu>

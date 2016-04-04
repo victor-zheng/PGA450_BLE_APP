@@ -17,12 +17,25 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+
+
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         MainActivityFragment fragment1 = new MainActivityFragment();
         transaction.add(R.id.main, fragment1,"frag1");
         transaction.commit();
         setContentView(R.layout.activity_main);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+// App Logo
+//        toolbar.setLogo(R.mipmap.radar);
+// Title
+        toolbar.setTitle(R.string.app_name);
+// Sub Title
+//        toolbar.setSubtitle("Sub title");
+        setSupportActionBar(toolbar);
 
         FloatingActionButton fab1 = (FloatingActionButton) findViewById(R.id.fab1);
         fab1.setOnClickListener(new View.OnClickListener() {
