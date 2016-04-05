@@ -1,5 +1,7 @@
 package com.example.zhengquanfa.pga450bleapp;
 
+import android.app.ActivityManager;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -36,30 +38,6 @@ public class MainActivity extends AppCompatActivity {
 // Sub Title
 //        toolbar.setSubtitle("Sub title");
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab1 = (FloatingActionButton) findViewById(R.id.fab1);
-        fab1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentManager manager = getSupportFragmentManager();
-                FragmentTransaction transaction = manager.beginTransaction();
-                MainActivityFragment fragment1 = new MainActivityFragment();
-                transaction.replace(R.id.main, fragment1);
-                transaction.commit();
-            }
-        });
-
-        FloatingActionButton fab2 = (FloatingActionButton) findViewById(R.id.fab2);
-        fab2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentManager manager = getSupportFragmentManager();
-                FragmentTransaction transaction = manager.beginTransaction();
-                FragmentMeasure fragment2 = new FragmentMeasure();
-                transaction.replace(R.id.main, fragment2);
-                transaction.commit();
-            }
-        });
     }
 
     @Override
@@ -75,12 +53,28 @@ public class MainActivity extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
+            switch (id) {
+                case R.id.action_scan:
+                    FragmentManager manager1 = getSupportFragmentManager();
+                    FragmentTransaction transaction1 = manager1.beginTransaction();
+                    MainActivityFragment fragment1 = new MainActivityFragment();
+                    transaction1.replace(R.id.main, fragment1);
+                    transaction1.commit();
+                    break;
+                case R.id.action_run:
+                    FragmentManager manager2 = getSupportFragmentManager();
+                    FragmentTransaction transaction2 = manager2.beginTransaction();
+                    FragmentMeasure fragment2 = new FragmentMeasure();
+                    transaction2.replace(R.id.main, fragment2);
+                    transaction2.commit();
+                    break;
+                case R.id.action_exit:
+//                    ActivityManager am= (ActivityManager) this.getSystemService(Context.ACTIVITY_SERVICE);
+//                    am.killBackgroundProcesses(this.getPackageName());
+                    System.exit(0);
+                    break;
+            }
         return super.onOptionsItemSelected(item);
     }
 }
