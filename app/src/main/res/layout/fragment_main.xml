@@ -4,13 +4,79 @@
     android:layout_height="match_parent"
     android:layout_marginLeft="10dp"
     android:layout_marginRight="10dp"
-    android:layout_marginTop="70dp"
-    android:layout_marginEnd="70dp"
-    tools:context="com.example.zhengquanfa.pga450bleapp.MainActivityFragment">
+    android:layout_marginTop="60dp"
+    android:layout_marginEnd="10dp"
+    tools:context="com.example.zhengquanfa.pga450bleapp.MainActivityFragment"
+    tools:showIn="@layout/content_main"
+    style="@style/AppTheme">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:text="Status："
+        android:id="@+id/textView_status_title"
+        android:textColor="@color/abc_primary_text_disable_only_material_light"
+        android:textSize="@dimen/abc_text_size_medium_material"
+        android:layout_below="@+id/space"
+        android:layout_toEndOf="@+id/space" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SCAN"
+        android:id="@+id/button_scan"
+        android:layout_below="@+id/space2"
+        android:layout_alignStart="@+id/textView_status_title" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="CONNECT"
+        android:id="@+id/button_connect"
+        android:layout_alignTop="@+id/button_scan"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="DISCONNECT"
+        android:id="@+id/button_disconnect"
+        android:layout_alignTop="@+id/button_connect"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="disconnected"
+        android:id="@+id/textView_status_content"
+        android:textColor="@color/abc_primary_text_disable_only_material_light"
+        android:textSize="@dimen/abc_text_size_medium_material"
+        android:layout_alignTop="@+id/textView_status_title"
+        android:layout_toEndOf="@+id/textView_status_title" />
+
+    <Space
+        android:layout_width="10px"
+        android:layout_height="10px"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/space" />
+
+    <ProgressBar
+        style="@android:style/Widget.ProgressBar.Large"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBar"
+        android:layout_alignParentTop="true"
+        android:max="100"
+        android:progress="100"
+        android:layout_alignParentEnd="true"
+        android:layout_above="@+id/space2" />
+
+    <Space
+        android:layout_width="fill_parent"
+        android:layout_height="20px"
+        android:id="@+id/space2"
+        android:layout_below="@+id/textView_status_title"
+        android:layout_alignEnd="@+id/button_disconnect" />
 
 </RelativeLayout>
