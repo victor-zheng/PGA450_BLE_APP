@@ -70,7 +70,8 @@
         android:max="100"
         android:progress="100"
         android:layout_alignParentEnd="true"
-        android:layout_above="@+id/space2" />
+        android:layout_above="@+id/space2"
+        android:visibility="invisible" />
 
     <Space
         android:layout_width="fill_parent"
