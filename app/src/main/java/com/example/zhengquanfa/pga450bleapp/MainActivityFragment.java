@@ -54,6 +54,12 @@ public class MainActivityFragment extends Fragment {
             Toast.makeText(getActivity(), R.string.ble_not_supported, Toast.LENGTH_SHORT).show();
             getActivity().finish();
         }
+        if (!mBluetoothAdapter.isEnabled()) {
+            if (!mBluetoothAdapter.isEnabled()) {
+                Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+            }
+        }
     }
 
     View.OnClickListener mylistener = new View.OnClickListener() {
@@ -62,12 +68,6 @@ public class MainActivityFragment extends Fragment {
             int ID = v.getId();
             switch (ID) {
                 case R.id.button_scan:
-                    if (!mBluetoothAdapter.isEnabled()) {
-                        if (!mBluetoothAdapter.isEnabled()) {
-                            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                            startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
-                        }
-                    }
                     ProgressBar  mypb = (ProgressBar)main_view.findViewById(R.id.progressBar);
                     mypb.setVisibility(v.VISIBLE);
                     break;
@@ -81,6 +81,17 @@ public class MainActivityFragment extends Fragment {
         }
     };
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1) {
+            if (resultCode == getActivity().RESULT_OK) {
+            }
+            else if (resultCode == getActivity().RESULT_CANCELED) {
+                Toast.makeText(getActivity(), R.string.ble_not_supported, Toast.LENGTH_SHORT).show();
+                System.exit(0);
+            }
+        }
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
