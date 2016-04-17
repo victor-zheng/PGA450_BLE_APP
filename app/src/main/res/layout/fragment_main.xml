@@ -80,4 +80,11 @@
         android:layout_below="@+id/textView_status_title"
         android:layout_alignEnd="@+id/button_disconnect" />
 
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/listView"
+        android:layout_toEndOf="@+id/space"
+        android:layout_below="@+id/button_scan" />
+
 </RelativeLayout>
