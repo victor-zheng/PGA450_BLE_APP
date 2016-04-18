@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,10 +29,23 @@ public class MainActivityFragment extends Fragment {
     private View main_view;
     public  BluetoothAdapter mBluetoothAdapter;
     private LeDeviceListAdapter mLeDeviceListAdapter;
+    private Handler mHandler;
+    private boolean mScanning = false;
+    protected ListView mList;
+
     private static final int REQUEST_ENABLE_BT = 1;
+    // Stops scanning after 10 seconds.
+    private static final long SCAN_PERIOD = 10000;
+
 
     public MainActivityFragment() {
     }
+/*
+    @Override
+    public void onResume() {
+        super.onResume();
+    }*/
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState)
     {
@@ -60,16 +74,43 @@ public class MainActivityFragment extends Fragment {
                 startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
             }
         }
-    }
+        //initial the viewlist
+        mLeDeviceListAdapter = new LeDeviceListAdapter();
+        mList = (ListView) getActivity().findViewById(R.id.listView);
+        mList.setAdapter(mLeDeviceListAdapter);
 
+        //start a 10s period task
+        mHandler = new Handler();
+    }
+    Runnable runnable=new Runnable(){
+        @Override
+        public void run() {
+            // scan 10s then close
+            mBluetoothAdapter.stopLeScan(mLeScanCallback);
+            ProgressBar mypb = (ProgressBar) main_view.findViewById(R.id.progressBar);
+            mypb.setVisibility(mypb.INVISIBLE);
+            mScanning = false;
+        }
+    };
     View.OnClickListener mylistener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             int ID = v.getId();
             switch (ID) {
                 case R.id.button_scan:
-                    ProgressBar  mypb = (ProgressBar)main_view.findViewById(R.id.progressBar);
-                    mypb.setVisibility(v.VISIBLE);
+                    if(mScanning == false) {
+                        ProgressBar mypb = (ProgressBar) main_view.findViewById(R.id.progressBar);
+                        mypb.setVisibility(v.VISIBLE);
+                        mScanning = true;
+                        // Stops scanning after a pre-defined scan period.
+                        mHandler.postDelayed(runnable, SCAN_PERIOD);
+                        mBluetoothAdapter.startLeScan(mLeScanCallback);
+                    }else{
+                        ProgressBar mypb = (ProgressBar) main_view.findViewById(R.id.progressBar);
+                        mypb.setVisibility(v.INVISIBLE);
+                        mScanning = false;
+                        mBluetoothAdapter.stopLeScan(mLeScanCallback);
+                    }
                     break;
                 case R.id.button_connect:
                     break;
@@ -110,6 +151,22 @@ public class MainActivityFragment extends Fragment {
         TextView deviceName;
         TextView deviceAddress;
     }
+    // Device scan callback.
+    private BluetoothAdapter.LeScanCallback mLeScanCallback =
+            new BluetoothAdapter.LeScanCallback() {
+
+                @Override
+                public void onLeScan(final BluetoothDevice device, int rssi, byte[] scanRecord) {
+                    /*
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            mLeDeviceListAdapter.addDevice(device);
+                            mLeDeviceListAdapter.notifyDataSetChanged();
+                        }
+                    });*/
+                }
+            };
     private class LeDeviceListAdapter extends BaseAdapter {
         private ArrayList<BluetoothDevice> mLeDevices;
         private LayoutInflater mInflator;
@@ -151,7 +208,6 @@ public class MainActivityFragment extends Fragment {
 
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
-            /*
             ViewHolder viewHolder;
             // General ListView optimization code.
             if (view == null) {
@@ -163,14 +219,13 @@ public class MainActivityFragment extends Fragment {
             } else {
                 viewHolder = (ViewHolder) view.getTag();
             }
-
             BluetoothDevice device = mLeDevices.get(i);
             final String deviceName = device.getName();
             if (deviceName != null && deviceName.length() > 0)
                 viewHolder.deviceName.setText(deviceName);
             else
                 viewHolder.deviceName.setText(R.string.unknown_device);
-            viewHolder.deviceAddress.setText(device.getAddress());*/
+            viewHolder.deviceAddress.setText(device.getAddress());
             return null;
 
         }

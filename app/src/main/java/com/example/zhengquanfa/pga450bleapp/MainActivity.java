@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
 //        toolbar.setSubtitle("Sub title");
         setSupportActionBar(toolbar);
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -69,8 +70,6 @@ public class MainActivity extends AppCompatActivity {
                     transaction2.commit();
                     break;
                 case R.id.action_exit:
-//                    ActivityManager am= (ActivityManager) this.getSystemService(Context.ACTIVITY_SERVICE);
-//                    am.killBackgroundProcesses(this.getPackageName());
                     System.exit(0);
                     break;
             }
